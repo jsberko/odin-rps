@@ -1,6 +1,13 @@
-console.log("Hello World")
+console.log("Hello to Odin Project: Rock, Paper, Scissors")
 
-// Write a function called "getComputerChoice" that randomly returns “rock”, “paper” or “scissors” (as a string)
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+let humanScore = 0;
+let computerScore = 0;
+
+playRound(humanSelection, computerSelection);
+
 
 function getComputerChoice() {
     let random = Math.ceil(Math.random() * 3);
@@ -14,21 +21,62 @@ function getComputerChoice() {
     }
 };
 
+function getHumanChoice() {
+    let choice = 0;
+    while (choice !== 1 || choice !== 2 || choice !== 3) {
+        choice = prompt("It's time to play Rock, Paper, Scissors! \nEnter 1 for Rock; \nEnter 2 for Paper; \nEnter 3 for Scissors;", "Please enter a number between 1 and 3")
 
-// Create a function (getUserChoice) to get the user’s choice and store in the variable (userChoice)
-//   prompt the user to enter their choice (1 for Rock, 2 for Paper, 3 for    
-//   scissors)…and provide “1” as the default
-//     if  userChoice !== 1, 2 or 3 prompt (“Please enter valid number)
-    
-//     If userChoice === 1 console.log(‘User chose “rock"’)
-//     else if (userChoice === 2) console.log(‘User chose “paper”’)
-//     else console.log(‘User chose “scissors”’)
+        if (choice === "1") {
+            return "Rock";
+            break;
+        } else if (choice === "2") {
+            return "Paper";
+            break;
+        } else if (choice === "3") {
+            return "Scissors";
+            break;
+        }
+    }
+}
+
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+        console.log("Tie!")
+        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
+    } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
+        humanScore += 1;
+        console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
+        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
+    } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
+        computerScore += 1;
+        console.log(`You lose! ${computerChoice} beats ${humanChoice}!`);
+        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
+    }
+}
 
 
-//   Create a function (getComputerChoice) that randomly selects the
-//   computer’s choice 
-//     random = Math.ceil(Math.random() * 3)
-//     if (random === 1) return “rock”
-//     else if (random === 2) return “paper”
-//     else return“scissors”
-//   Store the function’s return in the variable  
+
+// function playGame() {
+
+//     for (i = 0; i <= 4; i++) {
+//         playRound
+//     }
+
+//     let humanScore = 0;
+//     let computerScore = 0;
+
+//     function playRound(humanChoice, computerChoice) {
+//         if (humanChoice === computerChoice) {
+//             console.log("Tie!")
+//         } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
+//             humanScore += 1;
+//             console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
+//         } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
+//             computerScore += 1;
+//             console.log(`You lose! ${computerChoice} beats ${humanChoice}!`);
+//         }
+//     }
+// }
+
+
+
