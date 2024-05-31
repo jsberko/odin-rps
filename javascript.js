@@ -1,13 +1,36 @@
-console.log("Hello to Odin Project: Rock, Paper, Scissors")
+console.log('Type "playGame()" to execute the game')
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    let gameOver = false;
 
-let humanScore = 0;
-let computerScore = 0;
+    for (i = 1; i <= 5; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
 
-playRound(humanSelection, computerSelection);
+        function playRound(humanChoice, computerChoice) {
+            if (humanChoice === computerChoice) {
+                console.log(`Round ${i}: Tie! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`)
+            } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
+                humanScore += 1;
+                console.log(`Round ${i}: You win! ${humanChoice} beats ${computerChoice}! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
+            } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
+                computerScore += 1;
+                console.log(`Round ${i}: You lose! ${computerChoice} beats ${humanChoice}! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
+            }
+        }
+    }
 
+    if (computerScore > humanScore) {
+        alert(`Game over: Computer wins \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
+    } else if (humanScore > computerScore) {
+        alert(`Game over: You win! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
+    } else {
+        alert(`Game over: It's a tie! \nYour Score: ${humanScore}\nComputer Score: ${computerScore} `);
+    };
+
+    playAgain();
+}
 
 function getComputerChoice() {
     let random = Math.ceil(Math.random() * 3);
@@ -24,7 +47,7 @@ function getComputerChoice() {
 function getHumanChoice() {
     let choice = 0;
     while (choice !== 1 || choice !== 2 || choice !== 3) {
-        choice = prompt("It's time to play Rock, Paper, Scissors! \nEnter 1 for Rock; \nEnter 2 for Paper; \nEnter 3 for Scissors;", "Please enter a number between 1 and 3")
+        choice = prompt("It's time to play! \n \nEnter 1 for Rock; \nEnter 2 for Paper; \nEnter 3 for Scissors;", "Please enter a number between 1 and 3")
 
         if (choice === "1") {
             return "Rock";
@@ -39,44 +62,22 @@ function getHumanChoice() {
     }
 }
 
-function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-        console.log("Tie!")
-        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
-    } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
-        humanScore += 1;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
-        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
-    } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
-        computerScore += 1;
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}!`);
-        console.log(`Your Score: ${humanScore}\nComputer Score: ${computerScore}`)
+function playAgain() {
+    let choice = 0;
+    while (choice !== 1 || choice !== 2) {
+        choice = prompt("Would you like to play again? \nEnter 1 for Yes; \nEnter 2 for No;", "Please enter 1 or 2")
+
+        if (choice === "1") {
+            console.clear();
+            playGame();
+        } else if (choice === "2") {
+            alert("Thanks for playing!");
+            console.log('Type "playGame()" to execute the game');
+            return;
+            //Bug: The number of rounds you play somehow equals the number of times you must choose "no" to exit the program
+        };
     }
 }
-
-
-
-// function playGame() {
-
-//     for (i = 0; i <= 4; i++) {
-//         playRound
-//     }
-
-//     let humanScore = 0;
-//     let computerScore = 0;
-
-//     function playRound(humanChoice, computerChoice) {
-//         if (humanChoice === computerChoice) {
-//             console.log("Tie!")
-//         } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
-//             humanScore += 1;
-//             console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
-//         } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
-//             computerScore += 1;
-//             console.log(`You lose! ${computerChoice} beats ${humanChoice}!`);
-//         }
-//     }
-// }
 
 
 
