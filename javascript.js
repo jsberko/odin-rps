@@ -1,9 +1,9 @@
-console.log('Type "playGame()" to execute the game')
+console.log('Best out of 5 wins! \nType "playGame()" to execute the game')
 
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
-    let gameOver = false;
+    // gameOver = false;
 
     for (i = 1; i <= 5; i++) {
         playRound(getHumanChoice(), getComputerChoice());
@@ -29,7 +29,7 @@ function playGame() {
         alert(`Game over: It's a tie! \nYour Score: ${humanScore}\nComputer Score: ${computerScore} `);
     };
 
-    playAgain();
+    console.log("Thanks for playing!");
 }
 
 function getComputerChoice() {
@@ -59,23 +59,6 @@ function getHumanChoice() {
             return "Scissors";
             break;
         }
-    }
-}
-
-function playAgain() {
-    let choice = 0;
-    while (choice !== 1 || choice !== 2) {
-        choice = prompt("Would you like to play again? \nEnter 1 for Yes; \nEnter 2 for No;", "Please enter 1 or 2")
-
-        if (choice === "1") {
-            console.clear();
-            playGame();
-        } else if (choice === "2") {
-            alert("Thanks for playing!");
-            console.log('Type "playGame()" to execute the game');
-            return;
-            //Bug: The number of rounds you play somehow equals the number of times you must choose "no" to exit the program
-        };
     }
 }
 
