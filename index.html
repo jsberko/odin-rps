@@ -4,14 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="javascript.js"></script>
+    <title>Odin Project RPS</title>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Skranji:wght@400;700&family=Tilt+Prism&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <h1>Odin Project: Rock Paper Scissors Game</h1>
-    <p>Open the console and follow the directions to play!</p>
+    <section id="game">
+        <div class="gameTitle">
+            <h1>The Odin Project:<br>Rock Paper Scissors</h1>
+        </div>
+        <img src="./images/rps.jpg" alt="" class="image" id="image">
+        <div id="results" class="score">
+            <div>
+                <h2>Player</h2>
+                <span id="playerScore">0</span>
+                <p>Wins: <span id="playerWinsTotal">0</span></p>
+            </div>
+            <div>
+                <h2>Computer</h2>
+                <span id="computerScore">0</span>
+                <p>Wins: <span id="computerWinsTotal">0</span></p>
+            </div>
+        </div>
+        <div id="playGameButtonsContainer">
+            <button id="rock" class="play-buttons">Rock</button>
+            <button id="paper" class="play-buttons">Paper</button>
+            <button id="scissors" class="play-buttons">Scissors</button>
+        </div>
+        <div id="changeGameButtonsContainer">
+            <button id="resetGame" class="change-buttons">Reset Game</button>
+            <button id="newGame" class="change-buttons">Play Again</button>
+        </div>
+        <div id="messageDisplay">It's you vs. computer, first one to 5 points wins! Make your selection above to begin
+            play.
+        </div>
+    </section>
+    <script src="javascript.js"></script>
 </body>
 
 </html>

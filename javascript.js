@@ -1,36 +1,68 @@
-console.log('Best out of 5 wins! \nType "playGame()" to execute the game')
+// Game Object
+const game = {
+    // Selectors
+    image: document.querySelector("#image"),
+    playGameButtons: document.querySelector("#playGameButtonsContainer"),
+    changeGameButtons: document.querySelector("#changeGameButtonsContainer"),
+    messageDisplay: document.querySelector("#messageDisplay"),
+    playerScoreDisplay: document.querySelector("#playerScore"),
+    computerScoreDisplay: document.querySelector("#computerScore"),
+    playerWinsDisplay: document.querySelector("#playerWinsTotal"),
+    computerWinsDisplay: document.querySelector("#computerWinsTotal"),
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-    // gameOver = false;
+    // Messages
+    newGameMsg: "It's you vs. computer, first one to 5 points wins! Make your selection above to begin play.",
+    humanWinsMsg: "Game over. You have defeated the computer! Humanity thanks you for your capable efforts.",
+    computerWinsMsg: "Game over. You have been defeated by the computer! Better luck next time.",
+}
 
-    for (i = 1; i <= 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
 
-        function playRound(humanChoice, computerChoice) {
-            if (humanChoice === computerChoice) {
-                console.log(`Round ${i}: Tie! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`)
-            } else if ((humanChoice === "Rock" && computerChoice === "Scissors") || (humanChoice === "Paper" && computerChoice === "Rock") || (humanChoice === "Scissors" && computerChoice === "Paper")) {
-                humanScore += 1;
-                console.log(`Round ${i}: You win! ${humanChoice} beats ${computerChoice}! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
-            } else if ((humanChoice === "Rock" && computerChoice === "Paper") || (humanChoice === "Paper" && computerChoice === "Scissors") || (humanChoice === "Scissors" && computerChoice === "Rock")) {
-                computerScore += 1;
-                console.log(`Round ${i}: You lose! ${computerChoice} beats ${humanChoice}! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
-            }
+// Player Object
+const player = {
+    score: 0,
+    winTotal: 0,
+}
+
+
+// Computer Object
+const computer = {
+    score: 0,
+    winTotal: 0,
+}
+
+
+// Functions
+function newGame() {
+    // Reset variables
+    player.score = 0;
+    computer.score = 0;
+
+    // Reset displays
+    game.playerScoreDisplay.textContent = "0";
+    game.computerScoreDisplay.textContent = "0";
+    game.image.setAttribute("src", "./images/rps.jpg");
+
+    // Reset message
+    game.messageDisplay.classList.remove("turns-green");
+    game.messageDisplay.classList.remove("turns-red");
+    updateMessage(game.newGameMsg);
+}
+
+
+function playRound(playerChoice) {
+    if (player.score < 5 && computer.score < 5) {
+        let computerChoice = getComputerChoice();
+        let whoWon = determineWinner(playerChoice, computerChoice);
+
+        updateScores();
+        updateMessage(whoWon);
+
+        if (player.score === 5 || computer.score === 5) {
+            endGame();
         }
     }
-
-    if (computerScore > humanScore) {
-        alert(`Game over: Computer wins \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
-    } else if (humanScore > computerScore) {
-        alert(`Game over: You win! \nYour Score: ${humanScore}\nComputer Score: ${computerScore}`);
-    } else {
-        alert(`Game over: It's a tie! \nYour Score: ${humanScore}\nComputer Score: ${computerScore} `);
-    };
-
-    console.log("Thanks for playing!");
 }
+
 
 function getComputerChoice() {
     let random = Math.ceil(Math.random() * 3);
@@ -44,23 +76,80 @@ function getComputerChoice() {
     }
 };
 
-function getHumanChoice() {
-    let choice = 0;
-    while (choice !== 1 || choice !== 2 || choice !== 3) {
-        choice = prompt("It's time to play! \n \nEnter 1 for Rock; \nEnter 2 for Paper; \nEnter 3 for Scissors;", "Please enter a number between 1 and 3")
 
-        if (choice === "1") {
-            return "Rock";
-            break;
-        } else if (choice === "2") {
-            return "Paper";
-            break;
-        } else if (choice === "3") {
-            return "Scissors";
-            break;
-        }
+function determineWinner(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return "Tie!";
+    } else if ((playerChoice === "Rock" && computerChoice === "Scissors") || (playerChoice === "Paper" && computerChoice === "Rock") || (playerChoice === "Scissors" && computerChoice === "Paper")) {
+        player.score += 1;
+        return "You win!"
+    } else {
+        computer.score += 1;
+        return "Computer wins!";
     }
 }
 
 
+function updateScores() {
+    game.playerScoreDisplay.textContent = player.score;
+    game.computerScoreDisplay.textContent = computer.score;
+}
 
+
+function updateMessage(update) {
+    game.messageDisplay.textContent = update;
+}
+
+
+function updateWinTotal() {
+    game.playerWinsDisplay.textContent = player.winTotal;
+    game.computerWinsDisplay.textContent = computer.winTotal;
+}
+
+
+function endGame() {
+    if (player.score > computer.score) {
+        player.winTotal += 1;
+        game.image.setAttribute("src", "./images/happy_odin.jpg");
+        game.messageDisplay.classList.add("turns-green");
+        updateMessage(game.humanWinsMsg);
+        updateWinTotal()
+    }
+    else {
+        computer.winTotal += 1;
+        game.image.setAttribute("src", "./images/sad_odin.jpg");
+        game.messageDisplay.classList.add("turns-red");
+        updateMessage(game.computerWinsMsg);
+        updateWinTotal();
+    }
+}
+
+
+function resetGame() {
+    player.winTotal = 0;
+    computer.winTotal = 0;
+    updateWinTotal();
+    newGame();
+}
+
+
+
+// Button Event Listener, using Event Delegation
+game.playGameButtons.addEventListener("click", (event) => {
+    let target = event.target;
+
+    switch (target.id) {
+        case "rock": playRound("Rock"); break;
+        case "paper": playRound("Paper"); break;
+        case "scissors": playRound("Scissors"); break;
+    }
+});
+
+game.changeGameButtons.addEventListener("click", (event) => {
+    let target = event.target;
+
+    switch (target.id) {
+        case "newGame": newGame(); break;
+        case "resetGame": if (confirm("Reset game?")) { resetGame(); }; break;
+    }
+});
