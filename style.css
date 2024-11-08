@@ -5,7 +5,6 @@
 
 body {
     color: whitesmoke;
-    background-color: rgb(0, 20, 55);
     background-color: rgb(218, 213, 203);
 }
 
@@ -13,7 +12,6 @@ section {
     margin-top: 10px;
     width: 400px;
     background-color: rgb(0, 20, 55);
-    /* border: whitesmoke solid 1px; */
     font-family: "Skranji", system-ui;
     font-size: 1em;
     text-align: center;
@@ -30,15 +28,12 @@ h1 {
     margin: 15px auto;
 }
 
-
-
 .image {
     width: 400px;
     height: 300px;
     object-fit: cover;
     border-top: whitesmoke solid 1px;
     border-bottom: whitesmoke solid 1px;
-    /* border: whitesmoke solid 1px; */
 }
 
 .video {
@@ -47,7 +42,11 @@ h1 {
     object-fit: cover;
     border-top: whitesmoke solid 1px;
     border-bottom: whitesmoke solid 1px;
-    /* border: whitesmoke solid 1px; */
+}
+
+#messageDisplay {
+    padding: 15px 10px;
+    border-bottom: whitesmoke solid 1px;
 }
 
 .score {
@@ -66,7 +65,8 @@ h1 {
     color: rgb(203, 162, 135);
 }
 
-#playGameButtonsContainer {
+#playGameButtonsContainer,
+#changeGameButtonsContainer {
     display: flex;
 }
 
@@ -79,12 +79,7 @@ h1 {
     flex-grow: 1;
     padding: 10px 5px;
     cursor: pointer;
-    border-radius: 25%;
-}
-
-#changeGameButtonsContainer {
-    display: flex;
-    /* border: whitesmoke solid 1px; */
+    border-radius: 20%;
 }
 
 .change-buttons {
@@ -101,11 +96,6 @@ h1 {
     transition: all 0.5s;
 }
 
-#messageDisplay {
-    color: rgb(203, 162, 135);
-    padding: 15px 10px;
-    border-bottom: whitesmoke solid 1px;
-}
 
 .turns-green {
     color: green;
@@ -113,6 +103,10 @@ h1 {
 
 .turns-red {
     color: red;
+}
+
+.turns-default-color {
+    color: rgb(203, 162, 135);
 }
 
 .hide {
