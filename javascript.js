@@ -124,8 +124,8 @@ function chooseVideo(playerChoice, computerChoice) {
 
 
 function playVideo(roundResult) {
-    game.image.classList.add("hide");
     video.container.classList.remove("hide");
+    game.image.classList.add("hide");
     video.source.setAttribute("src", roundResult);
     video.container.load();
     video.container.play();
