@@ -15,8 +15,8 @@ const game = {
 
     // Messages
     newGameMsg: "It's you vs. computer, first one to 5 points wins! Make your selection below to begin play.",
-    humanWinsMsg: "Game over. You have defeated the computer! Humanity thanks you for your capable efforts.",
-    computerWinsMsg: "Game over. You have been defeated by the computer! Better luck next time.",
+    humanWinsMsg: "Game over. You have defeated the computer! Odin thanks you for your capable efforts.",
+    computerWinsMsg: "Game over. You have been defeated by the computer! Odin scowls in disgrace.",
 }
 
 // Video Object
@@ -78,8 +78,7 @@ function newGame() {
     game.image.setAttribute("src", "./images/rps.jpg");
 
     // Reset message
-    game.messageDisplay.classList.remove("turns-green");
-    game.messageDisplay.classList.remove("turns-red");
+    game.messageDisplay.setAttribute("color", "rgb(203, 162, 135)");
     updateMessage(game.newGameMsg);
 }
 
@@ -160,14 +159,14 @@ function endGame() {
     if (player.score > computer.score) {
         player.winTotal += 1;
         game.image.setAttribute("src", "./images/happy_odin.jpg");
-        game.messageDisplay.classList.add("turns-green");
+        game.messageDisplay.setAttribute("color", "green");
         updateMessage(game.humanWinsMsg);
         updateWinTotal()
     }
     else {
         computer.winTotal += 1;
         game.image.setAttribute("src", "./images/sad_odin.jpg");
-        game.messageDisplay.classList.add("turns-red");
+        game.messageDisplay.setAttribute("color", "red");
         updateMessage(game.computerWinsMsg);
         updateWinTotal();
     }
@@ -188,9 +187,9 @@ game.playGameButtons.addEventListener("click", (event) => {
     let target = event.target;
 
     switch (target.id) {
-        case "rock": playRound("Rock"); break;
-        case "paper": playRound("Paper"); break;
-        case "scissors": playRound("Scissors"); break;
+        case "rock": playRound("Rock"); updateMessage("Rock...Paper...Scissors SHOOT!"); break;
+        case "paper": playRound("Paper"); updateMessage("Rock...Paper...Scissors SHOOT!"); break;
+        case "scissors": playRound("Scissors"); updateMessage("Rock...Paper...Scissors SHOOT!"); break;
     }
 });
 
