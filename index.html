@@ -15,11 +15,23 @@
 </head>
 
 <body>
-    <section id="game">
+    <section>
         <div class="gameTitle">
             <h1>The Odin Project:<br>Rock Paper Scissors</h1>
         </div>
-        <img src="./images/rps.jpg" alt="" class="image" id="image">
+
+        <div class="graphicsContainer">
+            <img src="./images/rps.jpg" alt="" class="image" id="image">
+            <video class="video hide" id="videoContainer" muted autoplay>
+                <source id="videoSource" src="" type="video/mp4" />
+            </video>
+        </div>
+
+        <div id="messageDisplay">It's you vs. computer, first one to 5 points wins! Make your selection below to
+            begin
+            play.
+        </div>
+
         <div id="results" class="score">
             <div>
                 <h2>Player</h2>
@@ -32,18 +44,18 @@
                 <p>Wins: <span id="computerWinsTotal">0</span></p>
             </div>
         </div>
+
         <div id="playGameButtonsContainer">
             <button id="rock" class="play-buttons">Rock</button>
             <button id="paper" class="play-buttons">Paper</button>
             <button id="scissors" class="play-buttons">Scissors</button>
         </div>
+
         <div id="changeGameButtonsContainer">
             <button id="resetGame" class="change-buttons">Reset Game</button>
             <button id="newGame" class="change-buttons">Play Again</button>
         </div>
-        <div id="messageDisplay">It's you vs. computer, first one to 5 points wins! Make your selection above to begin
-            play.
-        </div>
+
     </section>
     <script src="javascript.js"></script>
 </body>

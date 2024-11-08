@@ -1,5 +1,8 @@
 // Game Object
 const game = {
+    // Variables
+    roundWinner: "",
+
     // Selectors
     image: document.querySelector("#image"),
     playGameButtons: document.querySelector("#playGameButtonsContainer"),
@@ -11,9 +14,15 @@ const game = {
     computerWinsDisplay: document.querySelector("#computerWinsTotal"),
 
     // Messages
-    newGameMsg: "It's you vs. computer, first one to 5 points wins! Make your selection above to begin play.",
+    newGameMsg: "It's you vs. computer, first one to 5 points wins! Make your selection below to begin play.",
     humanWinsMsg: "Game over. You have defeated the computer! Humanity thanks you for your capable efforts.",
     computerWinsMsg: "Game over. You have been defeated by the computer! Better luck next time.",
+}
+
+// Video Object
+const video = {
+    container: document.querySelector("#videoContainer"),
+    source: document.querySelector("#videoSource"),
 }
 
 
@@ -32,10 +41,36 @@ const computer = {
 
 
 // Functions
+function playVideo(roundResult) {
+    game.image.classList.add("hide");
+    video.container.classList.remove("hide");
+    video.source.setAttribute("src", roundResult);
+    video.container.load();
+    video.container.play();
+}
+
+function chooseVideo(playerChoice, computerChoice) {
+    const roundResult = `${playerChoice}${computerChoice}`;
+
+    switch (roundResult) {
+        case "RockRock": return "./video/RockRock.mp4"; break;
+        case "RockPaper": return "./video/RockPaper.mp4"; break;
+        case "RockScissors": return "./video/RockScissors.mp4"; break;
+        case "PaperRock": return "./video/PaperRock.mp4"; break;
+        case "PaperPaper": return "./video/PaperPaper.mp4"; break;
+        case "PaperScissors": return "./video/PaperScissors.mp4"; break;
+        case "ScissorsRock": return "./video/ScissorsRock.mp4"; break;
+        case "ScissorsPaper": return "./video/ScissorsPaper.mp4"; break;
+        case "ScissorsScissors": return "./video/ScissorsScissors.mp4"; break;
+    }
+}
+
+
 function newGame() {
     // Reset variables
     player.score = 0;
     computer.score = 0;
+    game.roundWinner = "";
 
     // Reset displays
     game.playerScoreDisplay.textContent = "0";
@@ -48,18 +83,25 @@ function newGame() {
     updateMessage(game.newGameMsg);
 }
 
+function endRound() {
+    updateScores();
+    updateMessage(roundWinner);
+
+    if (player.score === 5 || computer.score === 5) {
+        endGame();
+    }
+}
+
 
 function playRound(playerChoice) {
     if (player.score < 5 && computer.score < 5) {
         let computerChoice = getComputerChoice();
-        let whoWon = determineWinner(playerChoice, computerChoice);
+        roundWinner = determineWinner(playerChoice, computerChoice);
 
-        updateScores();
-        updateMessage(whoWon);
+        let roundResult = chooseVideo(playerChoice, computerChoice);
+        playVideo(roundResult);
 
-        if (player.score === 5 || computer.score === 5) {
-            endGame();
-        }
+        setTimeout(endRound, 1750);
     }
 }
 
@@ -78,7 +120,11 @@ function getComputerChoice() {
 
 
 function determineWinner(playerChoice, computerChoice) {
-    if (playerChoice === computerChoice) {
+    if (playerChoice === "Rock" && computerChoice === "Rock") {
+        return "Tie!";
+        game.image.setAttribute("src", "./video/Rock_Rock.mp4");
+    }
+    else if (playerChoice === computerChoice) {
         return "Tie!";
     } else if ((playerChoice === "Rock" && computerChoice === "Scissors") || (playerChoice === "Paper" && computerChoice === "Rock") || (playerChoice === "Scissors" && computerChoice === "Paper")) {
         player.score += 1;
@@ -108,6 +154,9 @@ function updateWinTotal() {
 
 
 function endGame() {
+    game.image.classList.remove("hide");
+    video.container.classList.add("hide");
+
     if (player.score > computer.score) {
         player.winTotal += 1;
         game.image.setAttribute("src", "./images/happy_odin.jpg");
